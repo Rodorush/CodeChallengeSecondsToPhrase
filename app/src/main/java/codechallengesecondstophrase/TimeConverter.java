@@ -1,61 +1,58 @@
 package codechallengesecondstophrase;
 
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 public class TimeConverter {
     public String convertSecondsToPhrase(int seconds) {
         int years = seconds / (365 * 24 * 60 * 60);
         seconds %= 365 * 24 * 60 * 60;
-
+    
         int months = seconds / (30 * 24 * 60 * 60);
         seconds %= 30 * 24 * 60 * 60;
-
+    
         int days = seconds / (24 * 60 * 60);
         seconds %= 24 * 60 * 60;
-
+    
         int hours = seconds / (60 * 60);
         seconds %= 60 * 60;
-
+    
         int minutes = seconds / 60;
         int remainingSeconds = seconds % 60;
-
-        StringBuilder result = new StringBuilder();
-
+    
+        List<String> timeParts = new ArrayList<>();
+    
         if (years > 0) {
-            result.append(years).append(" year").append(years > 1 ? "s" : "");
+            timeParts.add(years + " year" + (years > 1 ? "s" : ""));
         }
         if (months > 0) {
-            if (result.length() > 0)
-                result.append(", ");
-            result.append(months).append(" month").append(months > 1 ? "s" : "");
+            timeParts.add(months + " month" + (months > 1 ? "s" : ""));
         }
         if (days > 0) {
-            if (result.length() > 0)
-                result.append(", ");
-            result.append(days).append(" day").append(days > 1 ? "s" : "");
+            timeParts.add(days + " day" + (days > 1 ? "s" : ""));
         }
         if (hours > 0) {
-            if (result.length() > 0)
-                result.append(", ");
-            result.append(hours).append(" hour").append(hours > 1 ? "s" : "");
+            timeParts.add(hours + " hour" + (hours > 1 ? "s" : ""));
         }
         if (minutes > 0) {
-            if (result.length() > 0)
-                result.append(", ");
-            result.append(minutes).append(" minute").append(minutes > 1 ? "s" : "");
+            timeParts.add(minutes + " minute" + (minutes > 1 ? "s" : ""));
         }
-        if (remainingSeconds == 0 && result.length() == 0) {
-            result.append("now");
+        if (remainingSeconds > 0) {
+            timeParts.add(remainingSeconds + " second" + (remainingSeconds > 1 ? "s" : ""));
         }
-        if (remainingSeconds > 0 || result.length() == 0) {
-            if (result.length() > 0)
-                result.append(" and ");
-            result.append(remainingSeconds).append(" second").append(remainingSeconds > 1 ? "s" : "");
+    
+        if (timeParts.isEmpty()) {
+            return "now";
+        } else {
+            if (timeParts.size() == 1) {
+                return timeParts.get(0);
+            }
+            String lastPart = timeParts.remove(timeParts.size() - 1);
+            return String.join(", ", timeParts) + " and " + lastPart;
         }
-        
-        return result.toString();
     }
-
+    
     public static void main(String[] args) {
 
         try (Scanner scanner = new Scanner(System.in)) {

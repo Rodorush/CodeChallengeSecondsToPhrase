@@ -15,5 +15,6 @@ class TimeConverterTest {
         assertEquals("2 minutes and 59 seconds", new TimeConverter().convertSecondsToPhrase(179));
         assertEquals("1 hour", new TimeConverter().convertSecondsToPhrase(3600));
         assertEquals("2 hours and 3 seconds", new TimeConverter().convertSecondsToPhrase(7203));
+        assertEquals("1 hour and 1 minute", new TimeConverter().convertSecondsToPhrase(3660));
     }
 }
